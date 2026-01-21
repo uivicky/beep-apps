@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>10 Second Beep App</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            margin: 0;
+        }
+        .container {
+            text-align: center;
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+        h1 { color: #333; }
+        #timer { font-size: 60px; color: #667eea; margin: 20px 0; }
+        button {
+            padding: 15px 40px;
+            font-size: 18px;
+            cursor: pointer;
+            border: none;
+            border-radius: 10px;
+            margin: 10px;
+        }
+        #startBtn { background: #28a745; color: white; }
+        #stopBtn { background: #dc3545; color: white; }
+        #status { margin-top: 20px; font-size: 18px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔔 Beep App</h1>
+        <p>Har 10 second mein beep bajega</p>
+        <div id="timer">10</div>
+        <button id="startBtn" onclick="startBeep()">Start</button>
+        <button id="stopBtn" onclick="stopBeep()">Stop</button>
+        <p id="status">Status: Stopped</p>
+    </div>
+
+    <script>
+        let countdown = 10;
+        let intervalId = null;
+        let isRunning = false;
+
+        // Beep sound play karne ka function
+        function playBeep() {
+            let audio = new Audio('https://media.geeksforgeeks.org/wp-content/uploads/20190531135120/beep.mp3');
+            audio.play();
+        }
+
+        function startBeep() {
+            if (isRunning) return;
+            isRunning = true;
+            document.getElementById('status').innerText = 'Status: Running ✅';
+            
+            intervalId = setInterval(() => {
+                countdown--;
+                document.getElementById('timer').innerText = countdown;
+                
+                if (countdown <= 0) {
+                    playBeep();
+                    countdown = 10; // Reset timer
+                }
+            }, 1000);
+        }
+
+        function stopBeep() {
+            isRunning = false;
+            clearInterval(intervalId);
+            countdown = 10;
+            document.getElementById('timer').innerText = '10';
+            document.getElementById('status').innerText = 'Status: Stopped ❌';
+        }
+    </script>
+</body>
+</html>
